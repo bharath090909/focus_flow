@@ -1,10 +1,8 @@
-
 // npm install prisma
 // npx prisma init (This will create schema.prisma file in prisma folder)
 // Then write down the schema
 // npx prisma migrate dev (This will migrate my model if we did something to them like creating or changing some fields are anything I need to run this command all the time)
 // npx prisma generate
-
 
 generator client {
   provider = "prisma-client-js"
@@ -16,17 +14,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
-  id  Int @default(autoincrement()) @id
+model Users {
+  id       Int    @id @default(autoincrement())
   username String @unique
   password String
-  age Int?
+  age      Int?
+  todos    Todo[]
 }
 
-model Todo{
-  id Int @default(autoincrement()) @id
-  title String
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
   description String
-  done Boolean
-  userId Int  
+  done        Boolean
+  userId      Int
+  user        Users   @relation(fields: [userId], references: [id])
 }
