@@ -1,0 +1,32 @@
+
+// npm install prisma
+// npx prisma init (This will create schema.prisma file in prisma folder)
+// Then write down the schema
+// npx prisma migrate dev (This will migrate my model if we did something to them like creating or changing some fields are anything I need to run this command all the time)
+// npx prisma generate
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users{
+  id  Int @default(autoincrement()) @id
+  username String @unique
+  password String
+  age Int?
+}
+
+model Todo{
+  id Int @default(autoincrement()) @id
+  title String
+  description String
+  done Boolean
+  userId Int  
+}
